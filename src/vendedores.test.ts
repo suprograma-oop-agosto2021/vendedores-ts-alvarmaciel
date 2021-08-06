@@ -1,10 +1,11 @@
-import { Ciudad, Provincia, VendedorFijo, Viajante } from "./vendedores";
+import { Ciudad, Provincia, VendedorFijo, Viajante, Corresponsal } from "./vendedores";
 
 describe("Vendedores", () => {
-  const buenosAires = new Provincia();
-  const tucuman = new Provincia();
+  const buenosAires = new Provincia(10000);
+  const tucuman = new Provincia(1000);
   const sierra = new Ciudad(buenosAires);
   const tafiDelValle = new Ciudad(tucuman);
+  const tandil = new Ciudad(buenosAires);
 
   describe("1 - puede trabajar", () => {
     describe("vendedor fijo", () => {
@@ -30,5 +31,17 @@ describe("Vendedores", () => {
         expect(viajante.puedeTrabajarEn(sierra)).toBeFalsy();
       });
     });
+    describe("corresponsal", () => {
+      const corresponsal = new Corresponsal([tafiDelValle, sierra]);
+
+      it("ciduades donde trabaja", () => {
+        expect(corresponsal.puedeTrabajarEn(tafiDelValle)).toBeTruthy();
+      });
+
+      it("una ciudad donde no trabaja", () => {
+        expect(corresponsal.puedeTrabajarEn(tandil)).toBeFalsy();
+      });
+    });
+
   });
 });
