@@ -55,6 +55,9 @@ describe("Vendedores", () => {
       it("Es firme", () => {
         expect(vendedorFijo2.tieneCategoria(false,true)).toBeFalsy;
       });
+      it("No es nada", () => {
+        expect(vendedorFijo2.tieneCategoria(false,false)).toBeFalsy;
+      });
     });
     
       describe("Vendedor firme", () => {
