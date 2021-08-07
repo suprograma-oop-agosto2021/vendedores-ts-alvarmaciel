@@ -24,10 +24,10 @@ export class VendedorFijo extends Vendedor {
     }
   }
 
-  tieneCategoria(versatil: Categoria, firme: Categoria): boolean {
-    versatil == this.versatil;
-    firme == this.firme;
-    return [versatil, firme];
+  tieneCategoria(): boolean {
+    //versatil == this.versatil;
+    //firme == this.firme;
+    return(this.versatil, this.firme);
   }
 
   puedeTrabajarEn(ciudad: Ciudad): boolean {
@@ -49,10 +49,10 @@ export class Viajante extends Vendedor {
       this.firme == false;
     }
   }
-  tieneCategoria(versatil: Categoria, firme: Categoria): boolean {
-    versatil == this.versatil;
-    firme == this.firme;
-    return [versatil, firme];
+  tieneCategoria(): boolean {
+    //versatil == this.versatil;
+    //firme == this.firme;
+    return(this.versatil, this.firme);
   }
   puedeTrabajarEn(ciudad: Ciudad): boolean {
     return any((p) => p == ciudad.provincia, this.provinciasDondeTrabaja);
@@ -75,10 +75,10 @@ export class Corresponsal extends Vendedor {
     }
   }
 
-  tieneCategoria(versatil: Categoria, firme: Categoria): boolean {
-    versatil == this.versatil;
-    firme == this.firme;
-    return [versatil, firme];
+  tieneCategoria(): boolean {
+    //versatil == this.versatil;
+    //firme == this.firme;
+    return(this.versatil, this.firme);
   }
 
   puedeTrabajarEn(ciudad: Ciudad): boolean{
