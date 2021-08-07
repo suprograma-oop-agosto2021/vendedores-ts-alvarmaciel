@@ -1,55 +1,61 @@
 import R, { any } from "ramda";
 
 abstract class Vendedor {
-  abstract puedeTrabajarEn(ciudad: Ciudad): boolean;
   abstract certificacionesProductos: number[];
   abstract certificacionesSimples: number[];
-  abstract categoria: string;
-  abstract tieneLaCategoria(categoria: string): string;
+  abstract versatil: boolean;
+  abstract firme: boolean;
+  abstract puedeTrabajarEn(ciudad: Ciudad): boolean;
+  abstract tieneCategoria(versatil: Categoria, firme: Categoria): boolean;
 }
 
 export class VendedorFijo extends Vendedor {
   certificacionesProductos: number[] = [];
   certificacionesSimples: number[] = [];
-  categoria = "";
-  constructor(public ciudadOrigen: Ciudad) {
+  constructor(public ciudadOrigen: Ciudad, public versatil: boolean, public firme: boolean) {
     super();
+    if (this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length + this.certificacionesSimples.length >= 3 ){
+      this.versatil == true;
+    } else if (R.sum(this.certificacionesSimples) + R.sum(this.certificacionesProductos) >= 30) {
+      this.firme == true;
+    } else {
+      this.versatil == false;
+      this.firme == false;
+    }
+  }
+
+  tieneCategoria(versatil: Categoria, firme: Categoria): boolean {
+    versatil == this.versatil;
+    firme == this.firme;
+    return [versatil, firme];
   }
 
   puedeTrabajarEn(ciudad: Ciudad): boolean {
     return ciudad == this.ciudadOrigen;
-  }
-  tieneLaCategoria(categoria: string): string{
-    if (this.certificacionesProductos.length >= 2 && this.certificacionesProductos.length >= 1){
-      return categoria = "versátil";
-    } else if (R.sum(this.certificacionesSimples) + R.sum(this.certificacionesProductos) >= 30) {
-      return categoria = "firme";
-    }else {
-      return categoria = "Sin categoría aún";
-    }
   }
 }
 
 export class Viajante extends Vendedor {
   certificacionesProductos: number[] = [];
   certificacionesSimples: number[] = [];
-  categoria = "";
-  constructor(public provinciasDondeTrabaja: Provincia[]) {
+  constructor(public provinciasDondeTrabaja: Provincia[], public versatil: boolean, public firme: boolean) {
     super();
-
+    if (this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length + this.certificacionesSimples.length >= 3 ){
+      this.versatil == true;
+    } else if (R.sum(this.certificacionesSimples) + R.sum(this.certificacionesProductos) >= 30) {
+      this.firme == true;
+    } else {
+      this.versatil == false;
+      this.firme == false;
+    }
   }
-
+  tieneCategoria(versatil: Categoria, firme: Categoria): boolean {
+    versatil == this.versatil;
+    firme == this.firme;
+    return [versatil, firme];
+  }
   puedeTrabajarEn(ciudad: Ciudad): boolean {
     return any((p) => p == ciudad.provincia, this.provinciasDondeTrabaja);
-  }
-  tieneLaCategoria(categoria: string): string{
-    if (this.certificacionesProductos.length >= 2 && this.certificacionesProductos.length >= 1){
-      return categoria = "versátil";
-    } else if (R.sum(this.certificacionesSimples) + R.sum(this.certificacionesProductos) >= 30) {
-      return categoria = "firme";
-    }else {
-      return categoria = "Sin categoría aún";
-    }
   }
 }
 
@@ -57,22 +63,26 @@ export class Viajante extends Vendedor {
 export class Corresponsal extends Vendedor {
   certificacionesProductos: number[] = [];
   certificacionesSimples: number[] = [];
-  categoria = "";
-  constructor(public ciudadesDondeTrabaja : Ciudad[]){
+  constructor(public ciudadesDondeTrabaja : Ciudad[], public versatil: boolean, public firme: boolean) {
     super();
+    if (this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length + this.certificacionesSimples.length >= 3 ){
+      this.versatil == true;
+    } else if (R.sum(this.certificacionesSimples) + R.sum(this.certificacionesProductos) >= 30) {
+      this.firme == true;
+    } else {
+      this.versatil == false;
+      this.firme == false;
+    }
+  }
+
+  tieneCategoria(versatil: Categoria, firme: Categoria): boolean {
+    versatil == this.versatil;
+    firme == this.firme;
+    return [versatil, firme];
   }
 
   puedeTrabajarEn(ciudad: Ciudad): boolean{
     return any((c) => c == ciudad, this.ciudadesDondeTrabaja);
-  }
-  tieneLaCategoria(categoria: string): string{
-    if (this.certificacionesProductos.length >= 2 && this.certificacionesProductos.length >= 1){
-      return categoria = "versátil";
-    } else if (R.sum(this.certificacionesSimples) + R.sum(this.certificacionesProductos) >= 30) {
-      return categoria = "firme";
-    }else {
-      return categoria = "Sin categoría aún";
-    }
   }
 }
 
@@ -83,4 +93,7 @@ export class Provincia {
 
 export class Ciudad {
   constructor(public provincia: Provincia) {}
+}
+
+export class Categoria {
 }
