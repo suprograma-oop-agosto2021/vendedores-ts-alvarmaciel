@@ -9,7 +9,7 @@ describe("Vendedores", () => {
 
   describe("1 - puede trabajar", () => {
     describe("vendedor fijo", () => {
-      const vendedorFijo = new VendedorFijo(sierra);
+      const vendedorFijo = new VendedorFijo(sierra, false, false);
 
       it("en la ciudad donde vive", () => {
         expect(vendedorFijo.puedeTrabajarEn(sierra)).toBeTruthy();
@@ -21,7 +21,7 @@ describe("Vendedores", () => {
     });
 
     describe("viajante", () => {
-      const viajante = new Viajante([tucuman]);
+      const viajante = new Viajante([tucuman], false, false);
 
       it("una ciudad que queda en una provincia donde trabaja", () => {
         expect(viajante.puedeTrabajarEn(tafiDelValle)).toBeTruthy();
@@ -32,7 +32,7 @@ describe("Vendedores", () => {
       });
     });
     describe("corresponsal", () => {
-      const corresponsal = new Corresponsal([tafiDelValle, sierra]);
+      const corresponsal = new Corresponsal([tafiDelValle, sierra], false, false);
 
       it("ciduades donde trabaja", () => {
         expect(corresponsal.puedeTrabajarEn(tafiDelValle)).toBeTruthy();
