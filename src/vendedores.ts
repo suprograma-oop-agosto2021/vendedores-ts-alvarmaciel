@@ -9,9 +9,9 @@ abstract class Vendedor {
 }
 
 export class VendedorFijo extends Vendedor implements IVendedor {
-  
   constructor(public ciudadOrigen: Ciudad) {
     super();
+    // todo esto tendría que ir en un metodo de la clase abstracta pero no me salió
     if (this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length + this.certificacionesSimples.length >= 3 ){
       this.versatil == true;
     } else if (R.sum(this.certificacionesSimples) + R.sum(this.certificacionesProductos) >= 30) {
