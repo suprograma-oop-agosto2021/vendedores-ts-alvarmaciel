@@ -1,31 +1,29 @@
 import R, { any } from "ramda";
 
 abstract class Vendedor {
-  abstract certificacionesProductos: number[];
-  abstract certificacionesSimples: number[];
-  //abstract versatil: boolean;
-  //abstract firme: boolean;
+  
   abstract puedeTrabajarEn(ciudad: Ciudad): boolean;
-  abstract tieneCategoria(versatil: Categoria, firme: Categoria): boolean;
 }
 
-export class VendedorFijo extends Vendedor {
+export class VendedorFijo extends Vendedor implements IVendedor {
   certificacionesProductos: number[] = [];
   certificacionesSimples: number[] = [];
-  constructor(public ciudadOrigen: Ciudad, public esVersatil: Categoria, public esFirme: Categoria) {
+  firme?: boolean;
+  versatil?: boolean;
+  constructor(public ciudadOrigen: Ciudad) {
     super();
     if (this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length + this.certificacionesSimples.length >= 3 ){
-      this.esVersatil == true;
+      this.versatil == true;
     } else if (R.sum(this.certificacionesSimples) + R.sum(this.certificacionesProductos) >= 30) {
-      this.esFirme == true;
+      this.firme == true;
     } else {
-      this.esVersatil == false;
-      this.esFirme == false;
+      this.versatil == false;
+      this.firme == false;
     }
   }
-
-  tieneCategoria(versatil: Categoria, firme: Categoria): boolean {
-    return(versatil == this.esVersatil, firme == this.esFirme);
+  
+  tieneCategoria(versatil: boolean, firme: boolean): boolean{
+    return(versatil == this.versatil, firme == this.firme);
   }
 
   puedeTrabajarEn(ciudad: Ciudad): boolean {
@@ -33,49 +31,52 @@ export class VendedorFijo extends Vendedor {
   }
 }
 
-export class Viajante extends Vendedor {
+export class Viajante extends Vendedor implements IVendedor {
   certificacionesProductos: number[] = [];
   certificacionesSimples: number[] = [];
-  constructor(public provinciasDondeTrabaja: Provincia[], public esVersatil: Categoria, public esFirme: Categoria) {
+  firme?: boolean;
+  versatil?: boolean;
+  constructor(public provinciasDondeTrabaja: Provincia[]) {
     super();
     if (this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length + this.certificacionesSimples.length >= 3 ){
-      this.esVersatil == true;
+      this.versatil == true;
     } else if (R.sum(this.certificacionesSimples) + R.sum(this.certificacionesProductos) >= 30) {
-      this.esFirme == true;
+      this.firme == true;
     } else {
-      this.esVersatil == false;
-      this.esFirme == false;
+      this.versatil == false;
+      this.firme == false;
     }
   }
-  tieneCategoria(versatil: Categoria, firme: Categoria): boolean {
-    return(versatil == this.esVersatil, firme == this.esFirme);
-  }
-
+  
+  tieneCategoria(versatil: boolean, firme: boolean): boolean{
+    return(versatil == this.versatil, firme == this.firme);
+  } 
   puedeTrabajarEn(ciudad: Ciudad): boolean {
     return any((p) => p == ciudad.provincia, this.provinciasDondeTrabaja);
   }
 }
 
 
-export class Corresponsal extends Vendedor {
+export class Corresponsal extends Vendedor implements IVendedor {
   certificacionesProductos: number[] = [];
   certificacionesSimples: number[] = [];
-  constructor(public ciudadesDondeTrabaja : Ciudad[], public esVersatil: Categoria, public esFirme: Categoria) {
+  firme?: boolean;
+  versatil?: boolean;
+  constructor(public ciudadesDondeTrabaja : Ciudad[]) {
     super();
     if (this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length + this.certificacionesSimples.length >= 3 ){
-      this.esVersatil == true;
+      this.versatil == true;
     } else if (R.sum(this.certificacionesSimples) + R.sum(this.certificacionesProductos) >= 30) {
-      this.esFirme == true;
+      this.firme == true;
     } else {
-      this.esVersatil == false;
-      this.esFirme == false;
+      this.versatil == false;
+      this.firme == false;
     }
   }
 
-  tieneCategoria(versatil: Categoria, firme: Categoria): boolean {
-    return(versatil == this.esVersatil, firme == this.esFirme);
+  tieneCategoria(versatil: boolean, firme: boolean): boolean{
+    return(versatil == this.versatil, firme == this.firme);
   }
-
   puedeTrabajarEn(ciudad: Ciudad): boolean{
     return any((c) => c == ciudad, this.ciudadesDondeTrabaja);
   }
@@ -90,5 +91,8 @@ export class Ciudad {
   constructor(public provincia: Provincia) {}
 }
 
-export class Categoria {
-}
+export interface IVendedor {
+  versatil?: boolean;
+  firme?: boolean;
+  tieneCategoria(versatil: boolean, firme: boolean): boolean;
+  }
