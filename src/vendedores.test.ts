@@ -2,16 +2,15 @@ import { Ciudad, Provincia, VendedorFijo, Viajante, Corresponsal } from "./vende
 
 describe("Vendedores", () => {
   const buenosAires = new Provincia(10000);
-  const tucuman = new Provincia(1000);
+  const tucuman = new Provincia(10000000);
   const sierra = new Ciudad(buenosAires);
   const tafiDelValle = new Ciudad(tucuman);
   const tandil = new Ciudad(buenosAires);
 
-  describe("1 - puede trabajar", () => {
+  describe("1 - puede trabajar y es influyente", () => {
     describe("vendedor fijo", () => {
-      const vendedorFijo = new VendedorFijo(sierra);
-      vendedorFijo.certificacionesProductos=[1,2];
-      vendedorFijo.certificacionesSimples = [2,3];
+      const vendedorFijo = new VendedorFijo(sierra,[1,2],[2,3]);
+      
 
       it("en la ciudad donde vive", () => {
         expect(vendedorFijo.puedeTrabajarEn(sierra)).toBeTruthy();
@@ -20,12 +19,19 @@ describe("Vendedores", () => {
       it("en otra ciudad", () => {
         expect(vendedorFijo.puedeTrabajarEn(tafiDelValle)).toBeFalsy();
       });
+
+      it("No es influyente", () =>{
+        expect(vendedorFijo.esInfluyente(false)).toBeTruthy();
+      })
+
+      it("es influyente", () =>{
+        expect(vendedorFijo.esInfluyente(true)).toBeFalsy();
+      })
     });
 
     describe("viajante", () => {
-      const viajante = new Viajante([tucuman]);
-      viajante.certificacionesProductos=[];
-      viajante.certificacionesSimples = [10,30];
+      const viajante = new Viajante([tucuman],[],[10,30]);
+      
 
       it("una ciudad que queda en una provincia donde trabaja", () => {
         expect(viajante.puedeTrabajarEn(tafiDelValle)).toBeTruthy();
@@ -34,12 +40,20 @@ describe("Vendedores", () => {
       it("una ciudad que queda en una provincia donde no trabaja", () => {
         expect(viajante.puedeTrabajarEn(sierra)).toBeFalsy();
       });
+
+      it("No es influyente", () =>{
+        expect(viajante.esInfluyente(false)).toBeFalsy
+      });
+
+      it("Es influyente", () =>{
+        expect(viajante.esInfluyente(true)).toBeTruthy
+      });
+
+      
     });
     describe("corresponsal", () => {
-      const corresponsal = new Corresponsal([tafiDelValle, sierra]);
-      corresponsal.certificacionesProductos=[];
-      corresponsal.certificacionesSimples=[];
-
+      const corresponsal = new Corresponsal([tafiDelValle, sierra],[],[]);
+     
       it("ciduades donde trabaja", () => {
         expect(corresponsal.puedeTrabajarEn(tafiDelValle)).toBeTruthy();
       });
@@ -51,9 +65,8 @@ describe("Vendedores", () => {
   });
   describe("2 - Categorías", () => {
     describe("Vendedor Versatil", () => {
-    const vendedorFijo2 = new VendedorFijo(tandil)
-    vendedorFijo2.certificacionesProductos=[1,2]
-    vendedorFijo2.certificacionesSimples = [2,3]
+    const vendedorFijo2 = new VendedorFijo(tandil, [1,2],[2,3])
+    
 
     it("Es versatil", () =>{
       expect(vendedorFijo2.tieneCategoria(true, false)).toBeTruthy;
@@ -67,10 +80,8 @@ describe("Vendedores", () => {
   });
   
     describe("Vendedor firme", () => {
-    const viajante2 = new Viajante([tucuman]);
-    viajante2.certificacionesProductos=[]
-    viajante2.certificacionesSimples = [10,30]
-
+    const viajante2 = new Viajante([tucuman], [], [10,30]);
+    
     it("Es firme", () =>{
       expect(viajante2.tieneCategoria(false,true)).toBeTruthy;
     });
