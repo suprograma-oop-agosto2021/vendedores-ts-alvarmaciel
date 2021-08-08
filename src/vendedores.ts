@@ -5,21 +5,28 @@ abstract class Vendedor {
   certificacionesSimples: number[] = [];
   firme?: boolean;
   versatil?: boolean;
+  influyente!: boolean;
   abstract puedeTrabajarEn(ciudad: Ciudad): boolean;
 }
 
-export class VendedorFijo extends Vendedor implements IVendedor {
-  constructor(public ciudadOrigen: Ciudad) {
+export class VendedorFijo extends Vendedor implements IVendedor, IInfluyente {
+  constructor(public ciudadOrigen: Ciudad ) {
     super();
-    // todo esto tendría que ir en un metodo de la clase abstracta pero no me salió
+    // todo esto tendría que ir en un metodo de la clase abstracta pero no me saliógir
     if (this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length + this.certificacionesSimples.length >= 3 ){
-      this.versatil == true;
+      this.versatil = true;
     } else if (R.sum(this.certificacionesSimples) + R.sum(this.certificacionesProductos) >= 30) {
-      this.firme == true;
+      this.firme = true;
     } else {
-      this.versatil == false;
-      this.firme == false;
+      this.versatil = false;
+      this.firme = false;
     }
+    // Defino Influyente como false
+    this.influyente = false;
+
+  }
+  esInfluyente(_poblacion: number): boolean {
+    throw new Error("Method not implemented.");
   }
   
   tieneCategoria(versatil: boolean, firme: boolean): boolean{
@@ -35,12 +42,12 @@ export class Viajante extends Vendedor implements IVendedor {
   constructor(public provinciasDondeTrabaja: Provincia[]) {
     super();
     if (this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length + this.certificacionesSimples.length >= 3 ){
-      this.versatil == true;
+      this.versatil = true;
     } else if (R.sum(this.certificacionesSimples) + R.sum(this.certificacionesProductos) >= 30) {
-      this.firme == true;
+      this.firme = true;
     } else {
-      this.versatil == false;
-      this.firme == false;
+      this.versatil = false;
+      this.firme = false;
     }
   }
   
@@ -57,12 +64,12 @@ export class Corresponsal extends Vendedor implements IVendedor {
   constructor(public ciudadesDondeTrabaja : Ciudad[]) {
     super();
     if (this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length + this.certificacionesSimples.length >= 3 ){
-      this.versatil == true;
+      this.versatil = true;
     } else if (R.sum(this.certificacionesSimples) + R.sum(this.certificacionesProductos) >= 30) {
-      this.firme == true;
+      this.firme = true;
     } else {
-      this.versatil == false;
-      this.firme == false;
+      this.versatil = false;
+      this.firme = false;
     }
   }
 
@@ -88,3 +95,9 @@ export interface IVendedor {
   firme?: boolean;
   tieneCategoria(versatil: boolean, firme: boolean): boolean;
   }
+
+export interface IInfluyente {
+  influyente: boolean;
+  esInfluyente(poblacion: number): boolean;
+
+}
