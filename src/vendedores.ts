@@ -1,15 +1,15 @@
 import R, { any } from "ramda";
 
 abstract class Vendedor {
-  
-  abstract puedeTrabajarEn(ciudad: Ciudad): boolean;
-}
-
-export class VendedorFijo extends Vendedor implements IVendedor {
   certificacionesProductos: number[] = [];
   certificacionesSimples: number[] = [];
   firme?: boolean;
   versatil?: boolean;
+  abstract puedeTrabajarEn(ciudad: Ciudad): boolean;
+}
+
+export class VendedorFijo extends Vendedor implements IVendedor {
+  
   constructor(public ciudadOrigen: Ciudad) {
     super();
     if (this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length + this.certificacionesSimples.length >= 3 ){
@@ -32,10 +32,6 @@ export class VendedorFijo extends Vendedor implements IVendedor {
 }
 
 export class Viajante extends Vendedor implements IVendedor {
-  certificacionesProductos: number[] = [];
-  certificacionesSimples: number[] = [];
-  firme?: boolean;
-  versatil?: boolean;
   constructor(public provinciasDondeTrabaja: Provincia[]) {
     super();
     if (this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length + this.certificacionesSimples.length >= 3 ){
@@ -58,10 +54,6 @@ export class Viajante extends Vendedor implements IVendedor {
 
 
 export class Corresponsal extends Vendedor implements IVendedor {
-  certificacionesProductos: number[] = [];
-  certificacionesSimples: number[] = [];
-  firme?: boolean;
-  versatil?: boolean;
   constructor(public ciudadesDondeTrabaja : Ciudad[]) {
     super();
     if (this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length >= 1 && this.certificacionesProductos.length + this.certificacionesSimples.length >= 3 ){
